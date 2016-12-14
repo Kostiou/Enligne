@@ -47,7 +47,7 @@ $tab_articles = $sth->fetchAll(PDO::FETCH_ASSOC);   //On créé une variable dan
 <div class="span7 hero-unit">
 
     
-    <!-- Gestion des messages de connexion et de modification d'articles-->
+    <!-- Gestion des messages de connexion et de modification/suppression d'articles-->
     <?php
     if (isset($_COOKIE['sid']) AND isset($_SESSION['connexion']) AND $_SESSION['connexion'] == TRUE) {  // condition permettant de controler la présence du cookie de connexion
         ?>
@@ -63,6 +63,15 @@ $tab_articles = $sth->fetchAll(PDO::FETCH_ASSOC);   //On créé une variable dan
             <strong>Félicitations</strong> Votre article a été modifié !!!
         </div>
         <?php
+    }
+    
+    if (isset($_SESSION['suppr']) AND $_SESSION['suppr'] = TRUE) {  // condition permettant de controler la présence du cookie de connexion
+        ?>
+        <div class = "alert alert-danger text-center" role = "alert">  <!--Affichage d'un message de confirmation de connexion-->
+            Votre article a été supprimé !!!
+        </div>
+        <?php
+        unset($_SESSION['suppr']);    //aprés affichage du message de suppression on détruit la session
     }
 
     
@@ -90,6 +99,12 @@ $tab_articles = $sth->fetchAll(PDO::FETCH_ASSOC);   //On créé une variable dan
         <div class="inline">
             <a href="article.php?id=<?php echo $value['id']; ?>"><p>
                     <button class="btn btn-primary" type="button">Modifier cet article</button><!-- Ce lien redirige vers la page article en ajoutant l'id dans l'URL par la méthode GET   -->
+                </p></a>
+        </div>
+        
+        <div class="inline">
+            <a href="suppression.php?id=<?php echo $value['id']; ?>"><p>
+                    <button class="btn btn-danger" type="button">Supprimer cet article</button><!-- Ce lien redirige vers la page article en ajoutant l'id dans l'URL par la méthode GET   -->
                 </p></a>
         </div>
             <?php
